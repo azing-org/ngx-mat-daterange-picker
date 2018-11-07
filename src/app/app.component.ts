@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {
   Range,
   NgxDrpOptions,
@@ -28,7 +28,8 @@ export class AppComponent implements OnInit {
       presets: this.presets,
       format: 'mediumDate',
       range: { fromDate: today, toDate: today },
-      applyLabel: 'Submit'
+      applyLabel: 'Submit',
+      singleDate: true, // default = true
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
       // toMinMax: {fromDate:toMin, toDate:toMax},
@@ -45,8 +46,18 @@ export class AppComponent implements OnInit {
       const today = new Date();
       return new Date(today.setDate(today.getDate() - numOfDays));
     };
+    const getNextWeekDay = weekDay => {
+      // tslint:disable no-shadowed-variable
+      const today = new Date();
+      return new Date(today.setDate(today.getDate() - today.getDay() + 7 + weekDay));
+    };
 
+    const tomorrow = backDate(-1);
     const today = new Date();
+    const nextWeek = getNextWeekDay(1); // next Monday
+    const secondWeek = getNextWeekDay(8); // second next Monday
+    const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const secondMonthStart = new Date(today.getFullYear(), today.getMonth() + 2, 1);
     const yesterday = backDate(1);
     const minus7 = backDate(7);
     const minus30 = backDate(30);
@@ -57,25 +68,49 @@ export class AppComponent implements OnInit {
 
     this.presets = [
       {
-        presetLabel: 'Yesterday',
-        range: { fromDate: yesterday, toDate: today }
+        presetLabel: 'Today',
+        range: { fromDate: today, toDate: today }
       },
       {
-        presetLabel: 'Last 7 Days',
-        range: { fromDate: minus7, toDate: today }
+        presetLabel: 'Tomorrow',
+        range: { fromDate: tomorrow, toDate: tomorrow }
       },
       {
-        presetLabel: 'Last 30 Days',
-        range: { fromDate: minus30, toDate: today }
+        presetLabel: 'Next week',
+        range: { fromDate: nextWeek, toDate: nextWeek }
       },
       {
-        presetLabel: 'This Month',
-        range: { fromDate: currMonthStart, toDate: currMonthEnd }
+        presetLabel: 'Second week',
+        range: { fromDate: secondWeek, toDate: secondWeek }
       },
       {
-        presetLabel: 'Last Month',
-        range: { fromDate: lastMonthStart, toDate: lastMonthEnd }
-      }
+        presetLabel: 'Next Month',
+        range: { fromDate: nextMonthStart, toDate: nextMonthStart }
+      },
+      {
+        presetLabel: 'Second Month',
+        range: { fromDate: secondMonthStart, toDate: secondMonthStart }
+      },
+      // {
+      //   presetLabel: 'Yesterday',
+      //   range: { fromDate: yesterday, toDate: today }
+      // },
+      // {
+      //   presetLabel: 'Last 7 Days',
+      //   range: { fromDate: minus7, toDate: today }
+      // },
+      // {
+      //   presetLabel: 'Last 30 Days',
+      //   range: { fromDate: minus30, toDate: today }
+      // },
+      // {
+      //   presetLabel: 'This Month',
+      //   range: { fromDate: currMonthStart, toDate: currMonthEnd }
+      // },
+      // {
+      //   presetLabel: 'Last Month',
+      //   range: { fromDate: lastMonthStart, toDate: lastMonthEnd }
+      // }
     ];
   }
 

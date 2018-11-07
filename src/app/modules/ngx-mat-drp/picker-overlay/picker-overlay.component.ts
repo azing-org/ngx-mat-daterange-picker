@@ -25,6 +25,7 @@ export class PickerOverlayComponent implements OnInit {
   applyLabel: string;
   cancelLabel: string;
   shouldAnimate: string;
+  singleDate: boolean;
 
   constructor(
     private rangeStoreService: RangeStoreService,
@@ -51,6 +52,7 @@ export class PickerOverlayComponent implements OnInit {
       fromDate: this.toMinDate,
       toDate: this.toMaxDate
     } = this.configStoreService.ngxDrpOptions.toMinMax);
+    this.singleDate = this.configStoreService.ngxDrpOptions.singleDate;
   }
 
   updateFromDate(date) {

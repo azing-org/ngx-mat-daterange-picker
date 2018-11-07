@@ -9,7 +9,7 @@
     (selectedDateChange)="updateFromDate($event)">
   </calendar-wrapper>
   </div>
-  <div class="ngx-mat-drp-calendar-item">
+  <div class="ngx-mat-drp-calendar-item" *ngIf='!singleDate'>
     <calendar-wrapper 
     [prefixLabel]="endDatePrefix"
     [selectedDate]="toDate"

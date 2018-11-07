@@ -59,7 +59,11 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
         range.toDate,
         this.options.format
       );
-      this.selectedDateRange = `${from} - ${to}`;
+      if (this.configStoreService.ngxDrpOptions.singleDate) {
+        this.selectedDateRange = `${from}`;
+      } else {
+        this.selectedDateRange = `${from} - ${to}`;
+      }
       this.selectedDateRangeChanged.emit(range);
     });
 

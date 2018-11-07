@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4203 --open",
     "build": "ng build --prod --no-progress",
     "test": "ng test --watch=false --no-progress --code-coverage",
     "lint": "ng lint",
