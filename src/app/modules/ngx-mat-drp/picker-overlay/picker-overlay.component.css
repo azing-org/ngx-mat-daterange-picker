@@ -1,12 +1,13 @@
 .ngx-mat-drp-calendar-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     min-width: 350px;
     min-height: 300px;
 }
 
 .ngx-mat-drp-calendar-item {
-    flex-basis: 33.33%;
+    flex-basis: 1;
     min-width: 210px;
     padding: 1em;
     font-family: Roboto,"Helvetica Neue",sans-serif;
@@ -15,12 +16,13 @@
 }
 
 .ngx-mat-drp-menu {
+    flex-basis: 1;
     height: 100%;
 }
 .ngx-mat-drp-controls {
-    display: flex;
-    justify-content: space-around;
-    margin: 10% auto;
+  display: flex;
+  justify-content: space-around;
+  margin: 10% auto;
 }
 
 .ngx-mat-drp-overlay {

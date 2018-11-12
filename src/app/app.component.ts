@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
       presets: this.presets,
       format: 'mediumDate',
       range: { fromDate: today, toDate: today },
-      applyLabel: 'Submit',
+      applyLabel: 'OK',
       singleDate: true, // default = true
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
@@ -76,11 +76,11 @@ export class AppComponent implements OnInit {
         range: { fromDate: tomorrow, toDate: tomorrow }
       },
       {
-        presetLabel: 'Next week',
+        presetLabel: 'Next Week',
         range: { fromDate: nextWeek, toDate: nextWeek }
       },
       {
-        presetLabel: 'Second week',
+        presetLabel: 'Second Week',
         range: { fromDate: secondWeek, toDate: secondWeek }
       },
       {

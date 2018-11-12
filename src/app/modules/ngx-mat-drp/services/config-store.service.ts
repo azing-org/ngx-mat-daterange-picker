@@ -10,6 +10,7 @@ export class ConfigStoreService {
     locale: 'en-US',
     fromMinMax: { fromDate: null, toDate: null },
     toMinMax: { fromDate: null, toDate: null },
+    rangeLabel: 'Add End-Date',
     singleDate: true, // false = dateRange
   };
 
