@@ -29,7 +29,7 @@ export declare class PickerOverlayComponent implements OnInit {
     applyNewDates(e: any): void;
     addEndDate(e: any): void;
     discardNewDates(e: any): void;
-    private disposeOverLay();
-    private setSingleDate(singleDate);
-    private getRangeLabel(singleDate);
+    private disposeOverLay;
+    private setSingleDate;
+    private getRangeLabel;
 }

@@ -7,7 +7,7 @@ export declare class CalendarOverlayService {
     private hostElemRef;
     constructor(overlay: Overlay, injector: Injector);
     open(config: CalendarOverlayConfig, hostElemRef: ElementRef): OverlayRef;
-    private createOverlay(config);
-    private getOverlayConfig(config);
-    private createInjector(overlayRef);
+    private createOverlay;
+    private getOverlayConfig;
+    private createInjector;
 }

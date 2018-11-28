@@ -229,3 +229,28 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## License
 
 MIT
+
+## Updates
+
+### Fix for issue in parent angular app where this component is used
+
+```
+ERROR in node_modules/@angular/core/src/render3/ng_dev_mode.d.ts(9,11): error TS2451: Cannot redeclare block-scoped variable 'ngDevMode'.
+node_modules/ngx-mat-daterange-picker/node_modules/@angular/core/src/render3/ng_dev_mode.d.ts(9,11): error TS2451: Cannot redeclare block-scoped variable 'ngDevMode'.
+```
+
+Updating all npm packages solved this issue.
+
+```cmd
+npm install ng-packagr@4 --save-dev
+npm install tsickle --save-dev
+ng update --all
+```
+
+## Pack to create local NPM package, so it can be manually installed in other angular app
+
+```cmd
+npm run packagr
+cd dist && npm pack
+copy ngx-mat-daterange-picker-1.1.4.tgz c:\Projects\Azing\azing.tasks\assets\ng-packages\ /Y
+```

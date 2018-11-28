@@ -18,7 +18,7 @@ export declare class NgxMatDrpComponent implements OnInit, OnDestroy {
     constructor(changeDetectionRef: ChangeDetectorRef, calendarOverlayService: CalendarOverlayService, rangeStoreService: RangeStoreService, configStoreService: ConfigStoreService, datePipe: DatePipe);
     ngOnInit(): void;
     ngOnDestroy(): void;
-    private formatToDateString(date, format);
+    private formatToDateString;
     openCalendar(event: any): void;
     resetDates(range: Range): void;
 }
