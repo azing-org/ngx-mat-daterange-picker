@@ -69,8 +69,6 @@ export class PickerOverlayComponent implements OnInit {
   updateRangeByPreset(presetItem: PresetItem) {
     this.updateFromDate(new Date(presetItem.range.fromDate));
 
-    if (!this.singleDate) { this.updateToDate(new Date(presetItem.range.toDate)); }
-
     // In single-date mode, on click preset button, the picker closes.
     if (this.singleDate) { this.applyNewDates(void 0); }
   }
