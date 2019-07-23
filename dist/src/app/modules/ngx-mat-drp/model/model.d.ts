@@ -4,7 +4,7 @@ export interface PresetItem {
 }
 export interface Range {
     fromDate: Date;
-    toDate: Date;
+    toDate?: Date;
 }
 export interface CalendarOverlayConfig {
     panelClass?: string;
