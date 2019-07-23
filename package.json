@@ -25,6 +25,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "packagr": "rimraf dist && ng-packagr -p ng-package.json",
+    "pack": "rimraf dist && ng-packagr -p ng-package.json && cd dist && npm pack && copy ngx-mat-daterange-picker-1.1.4.tgz c:\\Projects\\Azing\\azing-app-tasks\\assets\\ng-packages\\ /Y && cd..",
     "gh-build": "ng build --prod --output-path docs --base-href"
   },
   "private": true,
@@ -36,6 +37,7 @@
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
     "@angular/material": "^7.2.2",
+    "@angular/material-moment-adapter": "^7.2.2",
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "core-js": "^2.6.3",
@@ -65,5 +67,8 @@
     "tsickle": "^0.34.0",
     "tslint": "~5.12.1",
     "typescript": "3.2.4"
+  },
+  "peerDependencies": {
+    "moment": "^2.24.0"
   }
 }

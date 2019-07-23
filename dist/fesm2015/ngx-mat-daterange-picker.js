@@ -11,6 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayRef, Overlay, OverlayConfig, OverlayModule } from '@angular/cdk/overlay';
 import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { Injectable, Inject, InjectionToken, Component, ViewEncapsulation, Injector, ViewChild, Output, EventEmitter, Input, ChangeDetectionStrategy, ChangeDetectorRef, NgModule } from '@angular/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import * as momentImported from 'moment';
 
 /**
  * @fileoverview added by tsickle
@@ -22,14 +24,14 @@ const DATE = new InjectionToken('date');
 class RangeStoreService {
     /**
      * @param {?} _fromDate
-     * @param {?} _toDate
+     * @param {?=} _toDate
      */
     constructor(_fromDate, _toDate) {
         this._fromDate = _fromDate;
         this._toDate = _toDate;
         this.rangeUpdate$ = new Subject();
     }
-    /* set fromDate(fromDate:Date) {
+    /* set fromDate(fromDate:Moment) {
         this._fromDate = fromDate;
       } */
     /**
@@ -38,7 +40,7 @@ class RangeStoreService {
     get fromDate() {
         return this._fromDate;
     }
-    /* set toDate(toDate:Date) {
+    /* set toDate(toDate:Moment) {
         this._toDate = toDate;
       } */
     /**
@@ -63,8 +65,8 @@ RangeStoreService.decorators = [
 ];
 /** @nocollapse */
 RangeStoreService.ctorParameters = () => [
-    { type: Date, decorators: [{ type: Inject, args: [DATE,] }] },
-    { type: Date, decorators: [{ type: Inject, args: [DATE,] }] }
+    { type: undefined, decorators: [{ type: Inject, args: [DATE,] }] },
+    { type: undefined, decorators: [{ type: Inject, args: [DATE,] }] }
 ];
 
 /**
@@ -168,6 +170,10 @@ class PickerOverlayComponent {
      */
     updateFromDate(date) {
         this.fromDate = date;
+        // In single-date mode, on click a date in the calendar, the picker closes.
+        if (this.singleDate) {
+            this.applyNewDates(null);
+        }
     }
     /**
      * @param {?} date
@@ -181,11 +187,11 @@ class PickerOverlayComponent {
      * @return {?}
      */
     updateRangeByPreset(presetItem) {
-        this.updateFromDate(new Date(presetItem.range.fromDate));
-        this.updateToDate(new Date(presetItem.range.toDate));
-        // if (this.applyOnPresetClick) {
-        //   this.applyNewDates(null);
-        // }
+        this.updateFromDate(presetItem.range.fromDate);
+        // In single-date mode, on click preset button, the picker closes.
+        if (this.singleDate) {
+            this.applyNewDates(void 0);
+        }
     }
     /**
      * @param {?} e
@@ -244,7 +250,7 @@ class PickerOverlayComponent {
 PickerOverlayComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-mat-drp-picker-overlay',
-                template: "<div [@transformPickerOverlay]=\"shouldAnimate\" class=\"ngx-mat-drp-calendar-container\">\r\n\r\n  <div class=\"ngx-mat-drp-calendar-item\">\r\n    <calendar-wrapper \r\n    [prefixLabel]=\"startDatePrefix\"\r\n    [selectedDate]=\"fromDate\"\r\n    [minDate]=\"fromMinDate\"\r\n    [maxDate]=\"fromMaxDate\"\r\n    (selectedDateChange)=\"updateFromDate($event)\">\r\n  </calendar-wrapper>\r\n  </div>\r\n  <div class=\"ngx-mat-drp-calendar-item\" *ngIf='!singleDate'>\r\n    <calendar-wrapper \r\n    [prefixLabel]=\"endDatePrefix\"\r\n    [selectedDate]=\"toDate\"\r\n    [minDate]=\"toMinDate\"\r\n    [maxDate]=\"toMaxDate\" \r\n    (selectedDateChange)=\"updateToDate($event)\">\r\n  </calendar-wrapper>\r\n  </div>\r\n  <div class=\"ngx-mat-drp-calendar-item\">\r\n    <div class=\"ngx-mat-drp-menu\">\r\n      <mat-drp-presets [presets]=\"presets\" (presetChanged)=\"updateRangeByPreset($event)\"></mat-drp-presets>\r\n      <div class=\"ngx-mat-drp-controls\">\r\n        <button mat-button (click)=\"addEndDate($event)\">{{rangeLabel}}</button>\r\n        <button mat-button (click)=\"discardNewDates($event)\" *ngIf=\"false\">{{cancelLabel}}</button>\r\n        <button mat-button color=\"primary\" (click)=\"applyNewDates($event)\">{{applyLabel}}</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+                template: "<div [@transformPickerOverlay]=\"shouldAnimate\" class=\"ngx-mat-drp-calendar-container\">\r\n  <div class=\"ngx-mat-drp-calendar-item\">\r\n    <calendar-wrapper [prefixLabel]=\"startDatePrefix\" [selectedDate]=\"fromDate\" [minDate]=\"fromMinDate\"\r\n      [maxDate]=\"fromMaxDate\" (selectedDateChange)=\"updateFromDate($event)\">\r\n    </calendar-wrapper>\r\n  </div>\r\n  <div class=\"ngx-mat-drp-calendar-item\" *ngIf='!singleDate'>\r\n    <calendar-wrapper [prefixLabel]=\"endDatePrefix\" [selectedDate]=\"toDate\" [minDate]=\"toMinDate\" [maxDate]=\"toMaxDate\"\r\n      [fromDate]=\"fromDate\" (selectedDateChange)=\"updateToDate($event)\">\r\n    </calendar-wrapper>\r\n  </div>\r\n  <div class=\"ngx-mat-drp-calendar-item\">\r\n    <div class=\"ngx-mat-drp-menu\">\r\n      <mat-drp-presets [presets]=\"presets\" (presetChanged)=\"updateRangeByPreset($event)\"></mat-drp-presets>\r\n      <div class=\"ngx-mat-drp-controls\">\r\n        <button mat-button (click)=\"addEndDate($event)\">{{rangeLabel}}</button>\r\n        <button mat-button (click)=\"discardNewDates($event)\" *ngIf=\"false\">{{cancelLabel}}</button>\r\n        <button mat-button *ngIf='!singleDate' color=\"primary\" (click)=\"applyNewDates($event)\">{{applyLabel}}</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>",
                 animations: [pickerOverlayAnimations.transformPanel],
                 encapsulation: ViewEncapsulation.None,
                 styles: [".ngx-mat-drp-calendar-container{display:flex;flex-wrap:wrap;justify-content:space-around;min-width:350px;min-height:300px}.ngx-mat-drp-calendar-item{flex-basis:1;min-width:210px;padding:1em;font-family:Roboto,\"Helvetica Neue\",sans-serif;font-size:14px;font-weight:400}.ngx-mat-drp-menu{flex-basis:1;height:100%}.ngx-mat-drp-controls{display:flex;justify-content:space-around;margin:10% auto}.ngx-mat-drp-overlay{box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);background:#fff;border-radius:2px}.ngx-mat-drp-overlay-backdrop{background-color:rgba(0,0,0,.2);opacity:.2}"]
@@ -509,8 +515,14 @@ class CalendarWrapperComponent {
      * @return {?}
      */
     ngOnChanges(changes) {
-        // Necessary to force view refresh
-        this.matCalendar.activeDate = changes.selectedDate.currentValue;
+        if (!!changes.selectedDate) {
+            // Necessary to force view refresh.
+            this.matCalendar.activeDate = changes.selectedDate.currentValue;
+        }
+        if (!!changes.fromDate) {
+            // Force rendering.
+            this.renderMatCalendarView();
+        }
     }
     /**
      * @param {?} date
@@ -529,13 +541,45 @@ class CalendarWrapperComponent {
      * @return {?}
      */
     onUserSelection(e) { }
+    /**
+     * @return {?}
+     */
+    dateClass() {
+        return (date) => {
+            if (!this.fromDate) {
+                return;
+            }
+            if (this.fromDate <= date) {
+                return;
+            }
+            // console.log('stv date', date);
+            // selectedDate is before fromDate
+            return 'before-from-date';
+        };
+    }
+    // force rendering
+    /**
+     * @private
+     * @return {?}
+     */
+    renderMatCalendarView() {
+        // Store initial value.
+        /** @type {?} */
+        const minDate = this.minDate;
+        // Change to any date, only to force rendering.
+        this.minDate = new Date('2001-01-01');
+        // Wait to change-detection function has terminated to execute a new change to force rendering the rows and cells.
+        setTimeout(() => {
+            this.minDate = minDate; // Restore initial value.
+        }, 0);
+    }
 }
 CalendarWrapperComponent.decorators = [
     { type: Component, args: [{
                 selector: 'calendar-wrapper',
-                template: "<div>\r\n\r\n  <!-- <mat-divider></mat-divider> -->\r\n  <span class=\"ngx-mat-drp-date-label\">\r\n    <label>{{prefixLabel}}</label>\r\n    <label class=\"ngx-mat-drp-selected-date-label\">{{selectedDate | date:dateFormat}}</label>\r\n  </span>\r\n  <!-- <mat-divider></mat-divider> -->\r\n\r\n  <mat-calendar \r\n    [startAt]=\"selectedDate\"\r\n    [selected]=\"selectedDate\"\r\n    [minDate]=\"minDate\"\r\n    [maxDate]=\"maxDate\"\r\n    (selectedChange)=\"onSelectedChange($event)\"\r\n    (yearSelected)=\"onYearSelected($event)\"\r\n    (_userSelection)=\"onUserSelection($event)\"\r\n    [dateFilter]=\"weekendFilter\">\r\n  </mat-calendar>\r\n\r\n</div>",
+                template: "<div>\r\n\r\n  <!-- <mat-divider></mat-divider> -->\r\n  <span class=\"ngx-mat-drp-date-label\">\r\n    <label>{{prefixLabel}}</label>\r\n    <label class=\"ngx-mat-drp-selected-date-label\">{{selectedDate | date:dateFormat}}</label>\r\n  </span>\r\n  <!-- <mat-divider></mat-divider> -->\r\n\r\n  <mat-calendar \r\n    [startAt]=\"selectedDate\"\r\n    [selected]=\"selectedDate\"\r\n    [minDate]=\"minDate\"\r\n    [maxDate]=\"maxDate\"\r\n    [dateClass]=\"dateClass()\"\r\n    (selectedChange)=\"onSelectedChange($event)\"\r\n    (yearSelected)=\"onYearSelected($event)\"\r\n    (_userSelection)=\"onUserSelection($event)\"\r\n    [dateFilter]=\"weekendFilter\">\r\n  </mat-calendar>\r\n\r\n</div>",
                 changeDetection: ChangeDetectionStrategy.OnPush,
-                styles: [".ngx-mat-drp-date-label{background:#fafafa;margin:15px;padding:4px 2px;width:100%;font-size:14px;font-weight:500}.ngx-mat-drp-selected-date-label{color:rgba(0,0,0,.38);padding-left:5%}"]
+                styles: [".ngx-mat-drp-date-label{background:#fafafa;margin:15px;padding:4px 2px;width:100%;font-size:14px;font-weight:500}.ngx-mat-drp-selected-date-label{color:rgba(0,0,0,.38);padding-left:5%}:host ::ng-deep.before-from-date .mat-calendar-body-selected{background-color:red}"]
             }] }
 ];
 /** @nocollapse */
@@ -548,7 +592,8 @@ CalendarWrapperComponent.propDecorators = {
     selectedDate: [{ type: Input }],
     prefixLabel: [{ type: Input }],
     minDate: [{ type: Input }],
-    maxDate: [{ type: Input }]
+    maxDate: [{ type: Input }],
+    fromDate: [{ type: Input }]
 };
 
 /**
@@ -590,7 +635,9 @@ PresetsComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-const ɵ0 = new Date();
+/** @type {?} */
+const moment = momentImported;
+const ɵ0 = moment();
 class NgxMatDrpModule {
 }
 NgxMatDrpModule.decorators = [
@@ -603,7 +650,8 @@ NgxMatDrpModule.decorators = [
                     MatInputModule,
                     MatButtonModule,
                     MatTooltipModule,
-                    OverlayModule
+                    OverlayModule,
+                    MatMomentDateModule,
                 ],
                 declarations: [
                     NgxMatDrpComponent,

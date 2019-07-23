@@ -16,6 +16,7 @@ import { RangeStoreService } from '../services/range-store.service';
 import { Range, NgxDrpOptions } from '../model/model';
 import { ConfigStoreService } from '../services/config-store.service';
 import { Subscription } from 'rxjs';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'ngx-mat-drp',
@@ -80,7 +81,7 @@ export class NgxMatDrpComponent implements OnInit, OnDestroy {
     }
   }
 
-  private formatToDateString(date: Date, format: string): string {
+  private formatToDateString(date: Moment, format: string): string {
     return this.datePipe.transform(date, format);
   }
 

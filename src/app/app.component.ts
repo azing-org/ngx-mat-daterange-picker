@@ -4,6 +4,7 @@ import {
   NgxDrpOptions,
   PresetItem
 } from './modules/ngx-mat-drp/model/model';
+import * as momentImported from 'moment'; const moment = momentImported;
 
 @Component({
   selector: 'ngx-mat-drp-root',
@@ -11,23 +12,23 @@ import {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  range: Range = { fromDate: new Date(), toDate: new Date() };
+  range: Range = { fromDate: moment(), toDate: moment() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
   @ViewChild('pickerOne') pickerOne;
 
   ngOnInit() {
-    const today = new Date();
-    const fromMin = new Date(today.getFullYear(), today.getMonth() - 2, 1);
-    const fromMax = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const toMin = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-    const toMax = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+    // const today = moment();
+    // const fromMin = moment().add(-2, 'months').startOf('month');
+    // const fromMax = moment().add(1, 'months').endOf('month');
+    // const toMin = moment().add(-1, 'months').startOf('month');
+    // const toMax = moment().add(2, 'months').endOf('month');
 
     this.setupPresets();
     this.options = {
       presets: this.presets,
       format: 'mediumDate',
-      range: { fromDate: today, toDate: today },
+      range: { fromDate: moment() },
       applyLabel: 'OK',
       singleDate: true, // default = true
       // excludeWeekends:true,
@@ -41,83 +42,38 @@ export class AppComponent implements OnInit {
   }
 
   setupPresets() {
-    const backDate = numOfDays => {
-      // tslint:disable no-shadowed-variable
-      const today = new Date();
-      return new Date(today.setDate(today.getDate() - numOfDays));
-    };
-    const getNextWeekDay = weekDay => {
-      // tslint:disable no-shadowed-variable
-      const today = new Date();
-      return new Date(today.setDate(today.getDate() - today.getDay() + 7 + weekDay));
-    };
-
-    const tomorrow = backDate(-1);
-    const today = new Date();
-    const nextWeek = getNextWeekDay(1); // next Monday
-    const secondWeek = getNextWeekDay(8); // second next Monday
-    const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    const secondMonthStart = new Date(today.getFullYear(), today.getMonth() + 2, 1);
-    const yesterday = backDate(1);
-    const minus7 = backDate(7);
-    const minus30 = backDate(30);
-    const currMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-    const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-    const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
-
     this.presets = [
       {
         presetLabel: 'Today',
-        range: { fromDate: today, toDate: today }
+        range: { fromDate: moment() }
       },
       {
         presetLabel: 'Tomorrow',
-        range: { fromDate: tomorrow, toDate: tomorrow }
+        range: { fromDate: moment().add(1, 'days') }
       },
       {
         presetLabel: 'Next Week',
-        range: { fromDate: nextWeek, toDate: nextWeek }
+        range: { fromDate: moment().day(1).add(1, 'weeks') }
       },
       {
         presetLabel: 'Second Week',
-        range: { fromDate: secondWeek, toDate: secondWeek }
+        range: { fromDate: moment().day(1).add(2, 'weeks') }
       },
       {
         presetLabel: 'Next Month',
-        range: { fromDate: nextMonthStart, toDate: nextMonthStart }
+        range: { fromDate: moment().startOf('month').add(1, 'months').add(6, 'days').day(1) }
       },
       {
         presetLabel: 'Second Month',
-        range: { fromDate: secondMonthStart, toDate: secondMonthStart }
+        range: { fromDate: moment().startOf('month').add(2, 'months').add(6, 'days').day(1) }
       },
-      // {
-      //   presetLabel: 'Yesterday',
-      //   range: { fromDate: yesterday, toDate: today }
-      // },
-      // {
-      //   presetLabel: 'Last 7 Days',
-      //   range: { fromDate: minus7, toDate: today }
-      // },
-      // {
-      //   presetLabel: 'Last 30 Days',
-      //   range: { fromDate: minus30, toDate: today }
-      // },
-      // {
-      //   presetLabel: 'This Month',
-      //   range: { fromDate: currMonthStart, toDate: currMonthEnd }
-      // },
-      // {
-      //   presetLabel: 'Last Month',
-      //   range: { fromDate: lastMonthStart, toDate: lastMonthEnd }
-      // }
     ];
   }
 
   reset() {
-    const today = new Date();
-    const currMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-    const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const today = moment();
+    const currMonthStart = moment().startOf('month');
+    const currMonthEnd = moment().endOf('month');
     this.pickerOne.resetDates({ fromDate: currMonthStart, toDate: currMonthEnd });
   }
 }

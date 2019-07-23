@@ -16,3 +16,7 @@
     width: 296px;
     height: 354px;
 } */
+
+:host ::ng-deep.before-from-date .mat-calendar-body-selected {
+  background-color: red;
+}

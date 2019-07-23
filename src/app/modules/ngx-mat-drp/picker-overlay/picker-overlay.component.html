@@ -1,22 +1,13 @@
 <div [@transformPickerOverlay]="shouldAnimate" class="ngx-mat-drp-calendar-container">
-
   <div class="ngx-mat-drp-calendar-item">
-    <calendar-wrapper 
-    [prefixLabel]="startDatePrefix"
-    [selectedDate]="fromDate"
-    [minDate]="fromMinDate"
-    [maxDate]="fromMaxDate"
-    (selectedDateChange)="updateFromDate($event)">
-  </calendar-wrapper>
+    <calendar-wrapper [prefixLabel]="startDatePrefix" [selectedDate]="fromDate" [minDate]="fromMinDate"
+      [maxDate]="fromMaxDate" (selectedDateChange)="updateFromDate($event)">
+    </calendar-wrapper>
   </div>
   <div class="ngx-mat-drp-calendar-item" *ngIf='!singleDate'>
-    <calendar-wrapper 
-    [prefixLabel]="endDatePrefix"
-    [selectedDate]="toDate"
-    [minDate]="toMinDate"
-    [maxDate]="toMaxDate" 
-    (selectedDateChange)="updateToDate($event)">
-  </calendar-wrapper>
+    <calendar-wrapper [prefixLabel]="endDatePrefix" [selectedDate]="toDate" [minDate]="toMinDate" [maxDate]="toMaxDate"
+      [fromDate]="fromDate" (selectedDateChange)="updateToDate($event)">
+    </calendar-wrapper>
   </div>
   <div class="ngx-mat-drp-calendar-item">
     <div class="ngx-mat-drp-menu">
@@ -24,7 +15,7 @@
       <div class="ngx-mat-drp-controls">
         <button mat-button (click)="addEndDate($event)">{{rangeLabel}}</button>
         <button mat-button (click)="discardNewDates($event)" *ngIf="false">{{cancelLabel}}</button>
-        <button mat-button color="primary" (click)="applyNewDates($event)">{{applyLabel}}</button>
+        <button mat-button *ngIf='!singleDate' color="primary" (click)="applyNewDates($event)">{{applyLabel}}</button>
       </div>
     </div>
   </div>

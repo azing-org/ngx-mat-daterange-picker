@@ -4,6 +4,7 @@ import { RangeStoreService } from '../services/range-store.service';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ConfigStoreService } from '../services/config-store.service';
 import { pickerOverlayAnimations } from './picker-overlay.animations';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'ngx-mat-drp-picker-overlay',
@@ -13,12 +14,12 @@ import { pickerOverlayAnimations } from './picker-overlay.animations';
   encapsulation: ViewEncapsulation.None
 })
 export class PickerOverlayComponent implements OnInit {
-  fromDate: Date;
-  toDate: Date;
-  fromMinDate: Date;
-  fromMaxDate: Date;
-  toMinDate: Date;
-  toMaxDate: Date;
+  fromDate: Moment;
+  toDate: Moment;
+  fromMinDate: Moment;
+  fromMaxDate: Moment;
+  toMinDate: Moment;
+  toMaxDate: Moment;
   presets: Array<PresetItem> = [];
   startDatePrefix: string;
   endDatePrefix: string;
@@ -58,6 +59,8 @@ export class PickerOverlayComponent implements OnInit {
 
   updateFromDate(date) {
     this.fromDate = date;
+    // In single-date mode, on click a date in the calendar, the picker closes.
+    if (this.singleDate) { this.applyNewDates(null); }
   }
 
   updateToDate(date) {
@@ -65,11 +68,10 @@ export class PickerOverlayComponent implements OnInit {
   }
 
   updateRangeByPreset(presetItem: PresetItem) {
-    this.updateFromDate(new Date(presetItem.range.fromDate));
-    this.updateToDate(new Date(presetItem.range.toDate));
-    // if (this.applyOnPresetClick) {
-    //   this.applyNewDates(null);
-    // }
+    this.updateFromDate(presetItem.range.fromDate);
+
+    // In single-date mode, on click preset button, the picker closes.
+    if (this.singleDate) { this.applyNewDates(void 0); }
   }
 
   applyNewDates(e) {
@@ -81,6 +83,7 @@ export class PickerOverlayComponent implements OnInit {
     this.configStoreService.ngxDrpOptions.singleDate = !this.configStoreService.ngxDrpOptions.singleDate;
     this.setSingleDate(this.configStoreService.ngxDrpOptions.singleDate);
   }
+
   discardNewDates(e) {
     // this.rangeStoreService.updateRange();
     this.disposeOverLay();
