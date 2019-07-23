@@ -26,6 +26,7 @@
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
     "@angular/material": "^7.2.2",
+    "@angular/material-moment-adapter": "^7.2.2",
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "core-js": "^2.6.3",
@@ -55,6 +56,9 @@
     "tsickle": "^0.34.0",
     "tslint": "~5.12.1",
     "typescript": "3.2.4"
+  },
+  "peerDependencies": {
+    "moment": "^2.24.0"
   },
   "main": "bundles/ngx-mat-daterange-picker.umd.js",
   "module": "fesm5/ngx-mat-daterange-picker.js",

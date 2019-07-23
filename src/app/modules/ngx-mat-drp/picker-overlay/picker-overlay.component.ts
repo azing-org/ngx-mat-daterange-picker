@@ -4,6 +4,7 @@ import { RangeStoreService } from '../services/range-store.service';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ConfigStoreService } from '../services/config-store.service';
 import { pickerOverlayAnimations } from './picker-overlay.animations';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'ngx-mat-drp-picker-overlay',
@@ -13,12 +14,12 @@ import { pickerOverlayAnimations } from './picker-overlay.animations';
   encapsulation: ViewEncapsulation.None
 })
 export class PickerOverlayComponent implements OnInit {
-  fromDate: Date;
-  toDate: Date;
-  fromMinDate: Date;
-  fromMaxDate: Date;
-  toMinDate: Date;
-  toMaxDate: Date;
+  fromDate: Moment;
+  toDate: Moment;
+  fromMinDate: Moment;
+  fromMaxDate: Moment;
+  toMinDate: Moment;
+  toMaxDate: Moment;
   presets: Array<PresetItem> = [];
   startDatePrefix: string;
   endDatePrefix: string;
@@ -67,7 +68,7 @@ export class PickerOverlayComponent implements OnInit {
   }
 
   updateRangeByPreset(presetItem: PresetItem) {
-    this.updateFromDate(new Date(presetItem.range.fromDate));
+    this.updateFromDate(presetItem.range.fromDate);
 
     // In single-date mode, on click preset button, the picker closes.
     if (this.singleDate) { this.applyNewDates(void 0); }

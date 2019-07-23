@@ -1,13 +1,14 @@
 import { InjectionToken } from '@angular/core';
 import { Range } from '../model/model';
 import { Subject } from 'rxjs';
-export declare const DATE: InjectionToken<Date>;
+import { Moment } from 'moment';
+export declare const DATE: InjectionToken<Moment>;
 export declare class RangeStoreService {
     private _fromDate;
-    private _toDate;
+    private _toDate?;
     rangeUpdate$: Subject<Range>;
-    constructor(_fromDate: Date, _toDate: Date);
-    readonly fromDate: Date;
-    readonly toDate: Date;
-    updateRange(fromDate?: Date, toDate?: Date): void;
+    constructor(_fromDate: Moment, _toDate?: Moment);
+    readonly fromDate: Moment;
+    readonly toDate: Moment;
+    updateRange(fromDate?: Moment, toDate?: Moment): void;
 }

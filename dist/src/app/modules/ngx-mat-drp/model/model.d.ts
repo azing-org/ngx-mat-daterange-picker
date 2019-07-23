@@ -1,10 +1,11 @@
+import { Moment } from 'moment';
 export interface PresetItem {
     presetLabel: string;
     range: Range;
 }
 export interface Range {
-    fromDate: Date;
-    toDate?: Date;
+    fromDate: Moment;
+    toDate?: Moment;
 }
 export interface CalendarOverlayConfig {
     panelClass?: string;

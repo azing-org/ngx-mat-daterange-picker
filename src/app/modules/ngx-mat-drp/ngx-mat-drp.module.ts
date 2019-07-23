@@ -15,6 +15,9 @@ import { CalendarWrapperComponent } from './calendar-wrapper/calendar-wrapper.co
 import { PresetsComponent } from './presets/presets.component';
 import { DATE } from './services/range-store.service';
 
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as momentImported from 'moment'; const moment = momentImported;
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { DATE } from './services/range-store.service';
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
-    OverlayModule
+    OverlayModule,
+    MatMomentDateModule,
   ],
   declarations: [
     NgxMatDrpComponent,
@@ -33,7 +37,7 @@ import { DATE } from './services/range-store.service';
     PresetsComponent
   ],
   providers: [
-    {provide: DATE, useValue: new Date()}
+    {provide: DATE, useValue: moment()}
   ],
   entryComponents: [PickerOverlayComponent],
   exports: [NgxMatDrpComponent]
