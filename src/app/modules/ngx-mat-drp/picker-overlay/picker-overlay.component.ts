@@ -58,6 +58,8 @@ export class PickerOverlayComponent implements OnInit {
 
   updateFromDate(date) {
     this.fromDate = date;
+    // In single-date mode, on click a date in the calendar, the picker closes.
+    if (this.singleDate) { this.applyNewDates(null); }
   }
 
   updateToDate(date) {
@@ -66,10 +68,11 @@ export class PickerOverlayComponent implements OnInit {
 
   updateRangeByPreset(presetItem: PresetItem) {
     this.updateFromDate(new Date(presetItem.range.fromDate));
-    this.updateToDate(new Date(presetItem.range.toDate));
-    // if (this.applyOnPresetClick) {
-    //   this.applyNewDates(null);
-    // }
+
+    if (!this.singleDate) { this.updateToDate(new Date(presetItem.range.toDate)); }
+
+    // In single-date mode, on click preset button, the picker closes.
+    if (this.singleDate) { this.applyNewDates(void 0); }
   }
 
   applyNewDates(e) {
