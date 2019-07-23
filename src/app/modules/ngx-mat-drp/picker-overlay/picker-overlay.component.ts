@@ -82,6 +82,7 @@ export class PickerOverlayComponent implements OnInit {
     this.configStoreService.ngxDrpOptions.singleDate = !this.configStoreService.ngxDrpOptions.singleDate;
     this.setSingleDate(this.configStoreService.ngxDrpOptions.singleDate);
   }
+
   discardNewDates(e) {
     // this.rangeStoreService.updateRange();
     this.disposeOverLay();

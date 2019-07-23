@@ -25,6 +25,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "packagr": "rimraf dist && ng-packagr -p ng-package.json",
+	"pack": "rimraf dist && ng-packagr -p ng-package.json && cd dist && npm pack && copy ngx-mat-daterange-picker-1.1.4.tgz c:\\Projects\\Azing\\azing-app-tasks\\assets\\ng-packages\\ /Y && cd..",
     "gh-build": "ng build --prod --output-path docs --base-href"
   },
   "private": true,
