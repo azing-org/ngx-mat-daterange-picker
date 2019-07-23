@@ -12,6 +12,7 @@
     [selected]="selectedDate"
     [minDate]="minDate"
     [maxDate]="maxDate"
+    [dateClass]="dateClass()"
     (selectedChange)="onSelectedChange($event)"
     (yearSelected)="onYearSelected($event)"
     (_userSelection)="onUserSelection($event)"

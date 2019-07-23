@@ -69,27 +69,27 @@ export class AppComponent implements OnInit {
     this.presets = [
       {
         presetLabel: 'Today',
-        range: { fromDate: today, toDate: today }
+        range: { fromDate: today }
       },
       {
         presetLabel: 'Tomorrow',
-        range: { fromDate: tomorrow, toDate: tomorrow }
+        range: { fromDate: tomorrow }
       },
       {
         presetLabel: 'Next Week',
-        range: { fromDate: nextWeek, toDate: nextWeek }
+        range: { fromDate: nextWeek }
       },
       {
         presetLabel: 'Second Week',
-        range: { fromDate: secondWeek, toDate: secondWeek }
+        range: { fromDate: secondWeek }
       },
       {
         presetLabel: 'Next Month',
-        range: { fromDate: nextMonthStart, toDate: nextMonthStart }
+        range: { fromDate: nextMonthStart }
       },
       {
         presetLabel: 'Second Month',
-        range: { fromDate: secondMonthStart, toDate: secondMonthStart }
+        range: { fromDate: secondMonthStart }
       },
       // {
       //   presetLabel: 'Yesterday',
